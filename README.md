@@ -74,6 +74,6 @@ The script will:
 
 ## 📧 Author
 
-Developed by \[Your Name].
+Developed by Vinayak Vathare.
 Feel free to contribute or report issues!
 
