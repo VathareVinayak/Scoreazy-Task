@@ -30,13 +30,10 @@ def get_video_id(url):
 
     return None  # If not matched
 
-
-# ----------------------------------------------
 # Main Function: Fetch & Update Transcripts
-# ----------------------------------------------
 def fetch_and_update_transcripts(file_path, sheet_name='Sheet1'):
     """
-    Reads video URLs from an Excel file, fetches their transcripts,
+    It will Reads video URLs from an Excel file, fetches their transcripts,
     and updates the Excel file with the transcript text.
     
     Args:
@@ -53,10 +50,10 @@ def fetch_and_update_transcripts(file_path, sheet_name='Sheet1'):
         print(f"Failed to read Excel file: {e}")
         return
 
-    # Add a new column to store transcripts
+    # Added a new column to store transcripts
     df['Transcript'] = ''
 
-    ytt_api = YouTubeTranscriptApi()  # Create the API instance once
+    ytt_api = YouTubeTranscriptApi()  # Created the API instance once
 
     # Process each row
     for index, row in df.iterrows():
@@ -112,19 +109,19 @@ def fetch_and_update_transcripts(file_path, sheet_name='Sheet1'):
     except Exception as e:
         print(f"Failed to save Excel file: {e}")
 
-
-# ----------------------------------------------
-# Entry Point of Script
-# ----------------------------------------------
+# Settingup the Entry Point of Script
 if __name__ == "__main__":
     excel_file = 'youtube_videos.xlsx'
 
-    # Optional: Create a dummy Excel file with YouTube URLs
+    # Creating a dummy Excel file with YouTube URLs
+    # To Test Every Type of Video's To Get Transcripts and Defines the problems whatever they are
     dummy_data = {
         'YouTube URL': [
-            'https://youtu.be/dQw4w9WgXcQ',   # Likely has transcript
-            'https://youtu.be/dQw4w9WgXcQ',   # Might not have transcript
-            'https://youtu.be/dQw4w9WgXcQ',   # Might not have transcript
+            'https://youtu.be/dQw4w9WgXcQ',   # have En transcript
+            'https://youtu.be/VioF7v8Mikg?si=63mivZji4BTP0Goj',   # have En transcript
+            'https://youtu.be/e3MX7HoGXug?si=BK2SOrsETSr0AWLU',   # have En transcript
+            'https://youtu.be/5WQgLboa_I8?si=9aa5yYadmRvEzxVn',   # have En transcript 
+            'https://youtu.be/CF52N-w4anI?si=6f8tnZm1ydqOpOkt',   # Hindi transcript
         ]
     }
 
