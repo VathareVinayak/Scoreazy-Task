@@ -17,9 +17,6 @@ This Python tool automates the process of fetching **YouTube video transcripts**
 
 ### ▶️ How It Is Triggered
 - The script is executed directly via terminal:  
-  ```bash
-  python app.py
-````
 
 * Automatically creates a dummy test file (`youtube_videos.xlsx`) if it doesn’t exist.
 
