@@ -1,79 +1,128 @@
-# Scoreazy-Task
+# 🎯 YouTube Transcript Fetcher – Scoreazy Task
 
-````markdown
-# 🎥 YouTube Transcript Fetcher from Excel
-
-This Python script reads a list of YouTube video URLs from an Excel file, fetches their transcripts (in English or Hindi), and updates the Excel file by adding a new column with the transcript text.
-
-## 📂 How It Works
-
-1. **Reads** video URLs from an Excel file (default: `youtube_videos.xlsx`).
-2. **Extracts** the video ID from each YouTube URL.
-3. **Fetches** the transcript using the `youtube-transcript-api` library.
-4. **Handles errors** like unavailable videos, disabled transcripts, or missing transcripts.
-5. **Saves** the updated Excel file with an added `Transcript` column.
+This Python tool automates the process of fetching **YouTube video transcripts** in **English or Hindi** from a list of **YouTube URLs** provided in an **Excel file**. It reads each video link, extracts its transcript using the `youtube-transcript-api`, and updates the same Excel file by adding a new column with the transcript for each video.
 
 ---
 
-## 🛠 Requirements
+## 📥 Input
 
-Install dependencies using pip:
+| Input Name  | Type   | Description                                                  |
+|-------------|--------|--------------------------------------------------------------|
+| Excel File  | `.xlsx`| Should contain a column named **"YouTube URL"** with links.  |
+| Sheet Name  | `str`  | (Optional) Worksheet name. Default: `'Sheet1'`               |
 
-```bash
-pip install pandas openpyxl youtube-transcript-api
+---
+
+## 🔄 Workflow
+
+### ▶️ How It Is Triggered
+- The script is executed directly via terminal:  
+  ```bash
+  python app.py
 ````
 
+* Automatically creates a dummy test file (`youtube_videos.xlsx`) if it doesn’t exist.
+
+### 🔢 Step-by-Step Breakdown
+
+1. **Read Excel File**
+
+   * Load the `.xlsx` file using `pandas`.
+   * Extract all URLs from the `"YouTube URL"` column.
+
+2. **Parse YouTube Video ID**
+
+   * Supports both `youtu.be/` and `youtube.com/watch?v=` formats.
+   * Strips out any extra parameters like `?si=...`.
+
+3. **Fetch Transcript Using API**
+
+   * Uses `youtube-transcript-api` to fetch transcripts in `'en'` or `'hi'`.
+
+4. **Handle Errors Gracefully**
+
+   * Displays and records appropriate messages for:
+
+     * Missing transcript
+     * Video unavailable
+     * Transcripts disabled by uploader
+
+5. **Update Excel File**
+
+   * Adds a `"Transcript"` column next to the original URLs.
+   * Saves the file using `openpyxl`.
+
 ---
 
-## 📁 Excel Format
+## 🧰 Libraries Used
 
-Your Excel file should contain a column named:
+* [`pandas`](https://pypi.org/project/pandas/) – For reading/writing Excel files.
+* [`youtube-transcript-api`](https://pypi.org/project/youtube-transcript-api/) – To fetch transcripts.
+* [`openpyxl`](https://pypi.org/project/openpyxl/) – Excel engine used by `pandas`.
 
+---
+
+## 🧠 Key Code Snippets
+
+### ✅ Extract Video ID from URL
+
+```python
+def get_video_id(url):
+    if not isinstance(url, str):
+        return None
+    if '?' in url:
+        url = url.split('?')[0]
+    if "youtu.be/" in url:
+        return url.split("/")[-1]
+    elif "v=" in url:
+        return url.split("v=")[-1].split("&")[0]
+    return None
 ```
-YouTube URL
+
+### ✅ Fetch & Append Transcripts
+
+```python
+fetched_transcript = ytt_api.fetch(video_id, languages=['en', 'hi'])
+transcript_list = fetched_transcript.to_raw_data()
+transcript_text = ' '.join([t['text'] for t in transcript_list])
+df.at[index, 'Transcript'] = transcript_text
 ```
 
-Example:
+### ✅ Save the Excel File
 
-| YouTube URL                                                  |
-| ------------------------------------------------------------ |
-| [https://youtu.be/dQw4w9WgXcQ](https://youtu.be/dQw4w9WgXcQ) |
-
----
-
-## 🚀 How to Run
-
-```bash
-python your_script_name.py
+```python
+df.to_excel(file_path, index=False, engine='openpyxl')
 ```
 
-The script will:
+---
 
-* Create a dummy Excel file (`youtube_videos.xlsx`) for testing.
-* Process each URL and fetch transcripts.
-* Save the updated file with a new `Transcript` column.
+## 📊 Sample Output
+
+### 📥 Input File (youtube\_videos.xlsx)
+
+| YouTube URL                                                                      |
+| -------------------------------------------------------------------------------- |
+| [https://youtu.be/dQw4w9WgXcQ](https://youtu.be/dQw4w9WgXcQ)                     |
+| [https://youtu.be/VioF7v8Mikg?si=abc123](https://youtu.be/VioF7v8Mikg?si=abc123) |
+
+### 📤 Output File (after script runs)
+
+| YouTube URL                                                                      | Transcript                        |
+| -------------------------------------------------------------------------------- | --------------------------------- |
+| [https://youtu.be/dQw4w9WgXcQ](https://youtu.be/dQw4w9WgXcQ)                     | Never gonna give you up...        |
+| [https://youtu.be/VioF7v8Mikg?si=abc123](https://youtu.be/VioF7v8Mikg?si=abc123) | Welcome to today’s walkthrough... |
 
 ---
 
-## 📌 Important Notes
+## 🔗 GitHub Repository
 
-* Only **public videos** with **available transcripts** (in English or Hindi) can be fetched.
-* URLs must be valid and follow the correct YouTube format.
-* Invalid or unavailable videos will be skipped or marked with appropriate error messages.
+[Scoreazy Task Repository](https://github.com/VathareVinayak/Scoreazy-Task)
 
 ---
 
-## 📄 Sample Output
+## 📬 Assignment Submission Info
 
-| YouTube URL                                              | Transcript              |
-| -------------------------------------------------------- | ----------------------- |
-| [https://youtu.be/abc123xyz](https://youtu.be/abc123xyz) | Full transcript text... |
-| [https://youtu.be/qwe456qwe](https://youtu.be/qwe456qwe) | Transcripts disabled... |
-
----
-
-## 📧 Author
-
-Developed by Vinayak Vathare.
-Feel free to contribute or report issues!
-
+* **Name**: Vinayak Vathare
+* **Email**: [vinayakvathare@gmail.com](mailto:vinayakvathare@gmail.com)
+* **Role Applied**: Python Developer Intern
+* **Submitted To**: [internship@scoreazy.com](mailto:internship@scoreazy.com)

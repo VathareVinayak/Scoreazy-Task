@@ -2,9 +2,7 @@ import pandas as pd
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api._errors import NoTranscriptFound, TranscriptsDisabled, VideoUnavailable
 
-# ----------------------------------------------
-# Helper Function: Extract YouTube Video ID
-# ----------------------------------------------
+# Act as a Helper Function: To Extract YouTube Video ID's
 def get_video_id(url):
     """
     Extracts the unique video ID from a YouTube URL.
