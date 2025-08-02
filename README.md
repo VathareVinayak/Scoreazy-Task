@@ -120,6 +120,6 @@ df.to_excel(file_path, index=False, engine='openpyxl')
 ## 📬 Assignment Submission Info
 
 * **Name**: Vinayak Vathare
-* **Email**: [vinayakvathare@gmail.com](mailto:vinayakvathare@gmail.com)
+* **Email**: [vinayakvathare@gmail.com](mailto:vinayak.vathare2004@gmail.com)
 * **Role Applied**: Python Developer Intern
 * **Submitted To**: [internship@scoreazy.com](mailto:internship@scoreazy.com)
